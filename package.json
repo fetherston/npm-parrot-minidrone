@@ -1,0 +1,15 @@
+{
+  "name": "parrot-minidrone-ps3",
+  "version": "1.0.0",
+  "description": "Node script to fly a Parrot MiniDrone (Cargo, Night, Rolling Spider) with a DualShock 3 controller connected to your machine via USB or Bluetooth",
+  "main": "drone.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christopher Fetherston",
+  "license": "MIT",
+  "dependencies": {
+    "dualshock-controller": "^0.6.9",
+    "noble": "^1.6.0"
+  }
+}
