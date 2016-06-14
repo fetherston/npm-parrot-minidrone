@@ -78,7 +78,7 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     writeFlightParams(flightParams) {
-        var buffer = new Buffer(19);
+        let buffer = new Buffer(19);
 
         // TODO: does this need to be reset to < 255?
         ++this.steps[FLIGHT_PARAMS_KEY]
@@ -108,7 +108,7 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     writeTrim() {
-        var buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x00, 0x00]);
+        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x00, 0x00]);
         this.getCharacteristic(COMMAND_KEY).write(buffer, true);
     }
 
@@ -118,7 +118,7 @@ class MiniDroneBtAdaptor {
      */
     writeTakeoff() {
         console.log('takeoff');
-        var buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x01, 0x00]);
+        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x01, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -128,7 +128,7 @@ class MiniDroneBtAdaptor {
      */
     writeLand() {
         console.log('land');
-        var buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x03, 0x00]);
+        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x03, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -138,7 +138,7 @@ class MiniDroneBtAdaptor {
      */
     writeEmergency() {
         console.log('panic', this.steps);
-        var buffer = new Buffer([0x02, ++this.steps[EMERGENCY_KEY] & 0xFF, 0x02, 0x00, 0x04, 0x00]);
+        let buffer = new Buffer([0x02, ++this.steps[EMERGENCY_KEY] & 0xFF, 0x02, 0x00, 0x04, 0x00]);
         this.write(EMERGENCY_KEY, buffer);
     }
 
@@ -210,10 +210,10 @@ class MiniDroneBtAdaptor {
             return false;
         }
 
-        var localName = peripheral.advertisement.localName;
-        var manufacturer = peripheral.advertisement.manufacturerData;
-        var localNameMatch = localName && DRONE_PREFIXES.some((prefix) => { return localName.indexOf(prefix) >= 0; });
-        var manufacturerMatch = manufacturer && (MANUFACTURER_SERIALS.indexOf(manufacturer) >= 0);
+        let localName = peripheral.advertisement.localName;
+        let manufacturer = peripheral.advertisement.manufacturerData;
+        let localNameMatch = localName && DRONE_PREFIXES.some((prefix) => { return localName.indexOf(prefix) >= 0; });
+        let manufacturerMatch = manufacturer && (MANUFACTURER_SERIALS.indexOf(manufacturer) >= 0);
 
         // Is true for EITHER an "RS_" name OR manufacturer code.
         return localNameMatch || manufacturerMatch;

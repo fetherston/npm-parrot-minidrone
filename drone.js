@@ -1,8 +1,8 @@
-var Controller = require('./Classes/Controller');
-var Drone = require('./Classes/Drone');
+let Controller = require('./Classes/Controller');
+let Drone = require('./Classes/Drone');
 
-var drone = new Drone();
-var controller = new Controller({
+let drone = new Drone();
+let controller = new Controller({
     onRightAnalogMove: (data) => {
         drone.setFlightParams({
             roll: data.x,

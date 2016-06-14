@@ -55,7 +55,7 @@ class Controller {
      */
     normalizeAnalogInputs(value) {
         return Object.keys(value).reduce((prev, key) => {
-            var val = Math.round((128 - value[key]) / 128 * this.options.sensitivity);
+            let val = Math.round((128 - value[key]) / 128 * this.options.sensitivity);
             prev[key] = Math.abs(val) > 1 ? val: 0;
             return prev;
         }, {});
