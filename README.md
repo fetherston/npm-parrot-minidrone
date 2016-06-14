@@ -1,7 +1,9 @@
 # Node.js script to fly Parrot MiniDrones with a PS3 DualShock Controller
-This library wraps the Nobile BTLE JS library and the PS3 & PS4 DualShock library so that you can fly a Parrot MiniDrone with a PS3 controller, Bluetooth and a Node.js client. Why? Because flying these little drones with analog sticks is _way_ better than flying it with an smart phone.
+This library wraps the Nobile BTLE JS library and the PS3 & PS4 DualShock library so that you can fly a Parrot MiniDrone with a PS3 controller, Bluetooth and a Node.js client. Why? Because flying these little drones with analog sticks is _way_ better than flying it with a smart phone.
 
 Known to work with the Airborne Cargo, Airborne Night and the Rolling Spider.
+
+Grabs a bunch of inspiration from [Voodootikigod's rolling spider library](https://github.com/voodootikigod/node-rolling-spider).
 
 ## How to use
 
