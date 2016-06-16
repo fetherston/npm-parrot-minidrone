@@ -19,6 +19,7 @@ let controller = new Controller({
     onTrianglePress: drone.takeoffOrLand.bind(drone),
     onSquarePress: drone.trim.bind(drone),
     onCirclePress: drone.emergency.bind(drone),
+    onXPress: drone.takePicture.bind(drone),
 });
 
 

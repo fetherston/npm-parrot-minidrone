@@ -4,12 +4,14 @@
  */
 const MD_CLASSES = {
     PILOTING: 0x00,
+    MEDIA_RECORD: 0x06,
 };
 const MD_METHODS = {
     TRIM: 0x00,
     TAKEOFF: 0x01,
     LAND: 0x03,
     EMERGENCY: 0x04,
+    PICTURE: 0x01,
 };
 const MD_DATA_TYPES = {
     ACK: 0x01,
@@ -179,6 +181,16 @@ class MiniDroneBtAdaptor {
         console.log('panic', this.steps);
         let buffer = this.createBuffer(EMERGENCY_KEY, [MD_CLASSES.PILOTING, MD_METHODS.EMERGENCY, 0x00]);
         this.write(EMERGENCY_KEY, buffer);
+    }
+
+    /**
+     * Convenience method for writing the media take a picture command
+     * @return {undefined}
+     */
+    writeTakePicture() {
+        console.log('take picture');
+        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.MEDIA_RECORD, MD_METHODS.PICTURE, 0x00]);
+        this.write(COMMAND_KEY, buffer);
     }
 
     /**

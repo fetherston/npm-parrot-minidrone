@@ -11,5 +11,6 @@
   "dependencies": {
     "dualshock-controller": "^0.6.9",
     "noble": "^1.6.0"
-  }
+  },
+  "engine": "node >= 6.0.0"
 }

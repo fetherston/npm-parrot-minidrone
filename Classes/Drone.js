@@ -44,7 +44,7 @@ class Drone {
     }
 
     /**
-     * Preform the drone's automated takeoff command
+     * Perform the drone's automated takeoff command
      * @return {undefined}
      */
     takeOff() {
@@ -53,7 +53,7 @@ class Drone {
     }
 
     /**
-     * Preform the drone's automated land command
+     * Perform the drone's automated land command
      * @return {undefined}
      */
     land() {
@@ -62,7 +62,7 @@ class Drone {
     }
 
     /**
-     * Preform the drone's trim command
+     * Perform the drone's trim command
      * @return {undefined}
      */
     trim() {
@@ -70,7 +70,15 @@ class Drone {
     }
 
     /**
-     * Preform the drone's emergency landing, kills the rotors
+     * Perform the drone's take a picture command
+     * @return {[type]} [description]
+     */
+    takePicture() {
+        this.network.writeTakePicture();
+    }
+
+    /**
+     * Perform the drone's emergency landing, kills the rotors
      * @return {undefined}
      */
     emergency() {

@@ -25,6 +25,7 @@ Grabs a bunch of inspiration from [Voodootikigod's rolling spider library](https
 **Square** | Flattrim
 **Triangle** | Toggle takeoff & land
 **Circle** | Emergency landing
+**X** | Take a picture
 
 ## Known issues
 

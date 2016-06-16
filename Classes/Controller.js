@@ -37,6 +37,7 @@ class Controller {
         this.controller.on('square:release', this.options.onSquarePress);
         this.controller.on('triangle:release', this.options.onTrianglePress);
         this.controller.on('circle:release', this.options.onCirclePress);
+        this.controller.on('x:release', this.options.onXPress);
         this.controller.on('start:release', this.options.onStartPress)
 
         this.controller.on('error', (data) => {
