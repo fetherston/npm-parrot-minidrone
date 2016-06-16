@@ -20,3 +20,6 @@ let controller = new Controller({
     onSquarePress: drone.trim.bind(drone),
     onCirclePress: drone.emergency.bind(drone),
 });
+
+
+// drone.connect();

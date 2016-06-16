@@ -98,6 +98,10 @@ class Drone {
         }
         this.network.writeFlightParams(this.flightParams);
     }
+
+    getBatteryLevel() {
+        return this.network.batteryLevel;
+    }
 }
 
 module.exports = Drone;

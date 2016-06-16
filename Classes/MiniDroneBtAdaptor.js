@@ -1,3 +1,27 @@
+/**
+ * MiniDrone Command classes and class methods
+ * https://github.com/Parrot-Developers/libARCommands/blob/master/Xml/MiniDrone_commands.xml
+ */
+const MD_CLASSES = {
+    PILOTING: 0x00,
+};
+const MD_METHODS = {
+    TRIM: 0x00,
+    TAKEOFF: 0x01,
+    LAND: 0x03,
+    EMERGENCY: 0x04,
+};
+const MD_DATA_TYPES = {
+    ACK: 0x01,
+    DATA: 0x02,
+    LLD: 0x03,
+    DATA_WITH_ACK: 0x04,
+};
+
+/**
+ * BTLE Characteristic keys
+ *
+ */
 const BATTERY_KEY = 'fb0f';
 const FLIGHT_STATUS_KEY = 'fb0e';
 const FLIGHT_PARAMS_KEY = 'fa0a';
@@ -11,6 +35,7 @@ const CHARACTERISTIC_MAP = [
 // Done IDs
 const MANUFACTURER_SERIALS = ['4300cf1900090100', '4300cf1909090100', '4300cf1907090100'];
 const DRONE_PREFIXES = ['RS_', 'Mars_', 'Travis_', 'Maclan_'];
+const MD_DEVICE_TYPE = 0x02;
 
 const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying', 'landing', 'emergency'];
 
@@ -27,6 +52,8 @@ class MiniDroneBtAdaptor {
         this.peripheral = null;
         this.characteristics = [];
         this.batteryLevel = 100;
+        // Steps hold the command sequence, they increment with every new characteristic write
+        // and should be reset once reaching 255
         this.steps = {};
         this.steps[FLIGHT_PARAMS_KEY] = 0;
         this.steps[COMMAND_KEY] = 0;
@@ -57,6 +84,7 @@ class MiniDroneBtAdaptor {
 
     /**
      * Writes a buffer to a BTLE peripheral characteristic
+     * Most convince methods in this class point to this method
      *
      * @param  {string} uuid   the characteristic's UUID
      * @param  {buffer} buffer stream of binary data
@@ -65,6 +93,11 @@ class MiniDroneBtAdaptor {
     write(uuid, buffer) {
         if (!this.characteristics) {
             throw 'You must have bluetooth enabled and be connected to a drone before executing a command. Please ensure Bluetooth is enabled on your machine and you are connected.'
+        }
+
+        // Sequence number can only be stored in one byte, so we must reset after 255
+        if (this.steps[uuid] >= 255) {
+            this.steps[uuid] = 0;
         }
 
         this.getCharacteristic(uuid).write(buffer, true);
@@ -79,12 +112,6 @@ class MiniDroneBtAdaptor {
      */
     writeFlightParams(flightParams) {
         let buffer = new Buffer(19);
-
-        // TODO: does this need to be reset to < 255?
-        ++this.steps[FLIGHT_PARAMS_KEY]
-        if (this.steps[FLIGHT_PARAMS_KEY] > 255) {
-            this.steps[FLIGHT_PARAMS_KEY] = 0;
-        }
 
         buffer.fill(0);
         buffer.writeInt16LE(2, 0);
@@ -108,8 +135,9 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     writeTrim() {
-        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x00, 0x00]);
-        this.getCharacteristic(COMMAND_KEY).write(buffer, true);
+        console.log('Trim');
+        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TRIM, 0x00]);
+        this.write(COMMAND_KEY, buffer);
     }
 
     /**
@@ -118,7 +146,7 @@ class MiniDroneBtAdaptor {
      */
     writeTakeoff() {
         console.log('takeoff');
-        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x01, 0x00]);
+        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TAKEOFF, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -128,7 +156,7 @@ class MiniDroneBtAdaptor {
      */
     writeLand() {
         console.log('land');
-        let buffer = new Buffer([0x02, ++this.steps[COMMAND_KEY] & 0xFF, 0x02, 0x00, 0x03, 0x00]);
+        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.LAND, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -138,8 +166,13 @@ class MiniDroneBtAdaptor {
      */
     writeEmergency() {
         console.log('panic', this.steps);
-        let buffer = new Buffer([0x02, ++this.steps[EMERGENCY_KEY] & 0xFF, 0x02, 0x00, 0x04, 0x00]);
+        let buffer = this.createBuffer(EMERGENCY_KEY, [MD_CLASSES.PILOTING, MD_METHODS.EMERGENCY, 0x00]);
         this.write(EMERGENCY_KEY, buffer);
+    }
+
+    createBuffer(uuid, args = []) {
+        let buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
+        return new Buffer(buffArray.concat(args));
     }
 
     /**
