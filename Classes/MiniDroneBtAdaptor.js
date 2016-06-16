@@ -51,7 +51,7 @@ class MiniDroneBtAdaptor {
         this.connected = false;
         this.peripheral = null;
         this.characteristics = [];
-        this.batteryLevel = 100;
+        this.batteryLevel = 'Unknown';
         // Steps hold the command sequence, they increment with every new characteristic write
         // and should be reset once reaching 255
         this.steps = {};
@@ -68,7 +68,7 @@ class MiniDroneBtAdaptor {
 
     /**
      * Event handler for when noble broadcasts a state change
-     * @param  {string} state a string describing noble's state
+     * @param  {String} state a string describing noble's state
      * @return {undefined}
      */
     onNobleStateChange(state) {
@@ -86,8 +86,8 @@ class MiniDroneBtAdaptor {
      * Writes a buffer to a BTLE peripheral characteristic
      * Most convince methods in this class point to this method
      *
-     * @param  {string} uuid   the characteristic's UUID
-     * @param  {buffer} buffer stream of binary data
+     * @param  {String} uuid   the characteristic's UUID
+     * @param  {Buffer} buffer stream of binary data
      * @return {undefined}
      */
     write(uuid, buffer) {
@@ -101,6 +101,17 @@ class MiniDroneBtAdaptor {
         }
 
         this.getCharacteristic(uuid).write(buffer, true);
+    }
+
+    /**
+     * Creates a buffer with the common values needed to write to the drone
+     * @param  {String} uuid The characteristic UUID
+     * @param  {Array}  args The buffer arguments, usually the above command constants
+     * @return {buffer}      A freshly created Buffer stream
+     */
+    createBuffer(uuid, args = []) {
+        let buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
+        return new Buffer(buffArray.concat(args));
     }
 
     /**
@@ -168,11 +179,6 @@ class MiniDroneBtAdaptor {
         console.log('panic', this.steps);
         let buffer = this.createBuffer(EMERGENCY_KEY, [MD_CLASSES.PILOTING, MD_METHODS.EMERGENCY, 0x00]);
         this.write(EMERGENCY_KEY, buffer);
-    }
-
-    createBuffer(uuid, args = []) {
-        let buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
-        return new Buffer(buffArray.concat(args));
     }
 
     /**
@@ -252,6 +258,11 @@ class MiniDroneBtAdaptor {
         return localNameMatch || manufacturerMatch;
     }
 
+    /**
+     * Finds a Noble Characteristic class for the given characteristic UUID
+     * @param  {String} uuid The characteristics UUID
+     * @return {Characteristic}      The Noble Characteristic corresponding to that UUID
+     */
     getCharacteristic(uuid) {
         if (!this.characteristics.length) {
             throw 'BTLE Device must be connected before calling this method';
@@ -261,6 +272,12 @@ class MiniDroneBtAdaptor {
         })[0];
     }
 
+    /**
+     * Event handler for when the drone broadcasts a flight status change
+     * @param  {Object}  data           The event data
+     * @param  {Boolean} isNotification If the broadcast event is a notification
+     * @return {undefined}
+     */
     onFlightStatusChange(data, isNotification) {
         if (!isNotification || data[2] !== 2) {
             return;
@@ -269,6 +286,12 @@ class MiniDroneBtAdaptor {
         console.log(`Flight status = ${this.flightStatus} - ${data[6]}`);
     }
 
+    /**
+     * Event handler for when the drone broadcasts a batter status change
+     * @param  {Object}  data           The event data
+     * @param  {Boolean} isNotification If the broadcast event is a notification
+     * @return {undefined}
+     */
     onBatteryStatusChange(data, isNotification) {
         if (!isNotification) {
           return;
@@ -277,6 +300,5 @@ class MiniDroneBtAdaptor {
         console.log(`Battery level: ${this.batteryLevel}%`);
     }
 }
-
 
 module.exports = MiniDroneBtAdaptor;
