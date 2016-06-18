@@ -5,8 +5,6 @@ Why? I didn't want to jailbreak an iOS device or root an Android phone to use a 
 
 Known to work with the Airborne Cargo, Airborne Night and the Rolling Spider.
 
-Grabs a bunch of inspiration from [Voodootikigod's rolling spider library](https://github.com/voodootikigod/node-rolling-spider).
-
 ## How to use
 
 1. Meet the [prerequisites for Noble](https://github.com/sandeepmistry/noble#prerequisites).
@@ -26,7 +24,12 @@ Grabs a bunch of inspiration from [Voodootikigod's rolling spider library](https
 **Triangle** | Toggle takeoff & land
 **Circle** | Emergency landing
 **X** | Take a picture
+**L1** | Left flip
+**R1** | Right Flip
+**L2** | Front Flip
+**R2** | Back Flip
 
-## Known issues
+## TODO:
 
 - [ ] Occasionally it won't takeoff after landing
+- [ ] After crashing you have flight state doesn't get updated in `Drone`

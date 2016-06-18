@@ -20,6 +20,18 @@ let controller = new Controller({
     onSquarePress: drone.trim.bind(drone),
     onCirclePress: drone.emergency.bind(drone),
     onXPress: drone.takePicture.bind(drone),
+    onL1Press: () => {
+        drone.animate('flipLeft');
+    },
+    onL2Press: () => {
+        drone.animate('flipFront');
+    },
+    onR1Press: () => {
+        drone.animate('flipRight');
+    },
+    onR2Press: () => {
+        drone.animate('flipBack');
+    },
 });
 
 

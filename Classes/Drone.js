@@ -85,6 +85,10 @@ class Drone {
         this.network.writeEmergency();
     }
 
+    animate(animation) {
+        this.network.writeAnimation(animation);
+    }
+
     /**
      * Pairs with the drone as a BTLE peripheral
      * @return {undefined}

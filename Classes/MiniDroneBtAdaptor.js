@@ -4,6 +4,7 @@
  */
 const MD_CLASSES = {
     PILOTING: 0x00,
+    ANIMATION: 0x04,
     MEDIA_RECORD: 0x06,
 };
 const MD_METHODS = {
@@ -12,6 +13,7 @@ const MD_METHODS = {
     LAND: 0x03,
     EMERGENCY: 0x04,
     PICTURE: 0x01,
+    FLIP: 0x00,
 };
 const MD_DATA_TYPES = {
     ACK: 0x01,
@@ -34,12 +36,12 @@ const CHARACTERISTIC_MAP = [
     BATTERY_KEY, FLIGHT_STATUS_KEY, 'fb1b', 'fb1c', 'fd22', 'fd23', 'fd24', 'fd52', 'fd53', 'fd54'
 ];
 
-// Done IDs
+// Drone IDs
 const MANUFACTURER_SERIALS = ['4300cf1900090100', '4300cf1909090100', '4300cf1907090100'];
 const DRONE_PREFIXES = ['RS_', 'Mars_', 'Travis_', 'Maclan_'];
 const MD_DEVICE_TYPE = 0x02;
 
-const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying', 'landing', 'emergency'];
+const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying', 'landing', 'emergency', 'rolling', 'initializing'];
 
 /**
  * Network adapter between drone and Noble BTLE
@@ -193,6 +195,22 @@ class MiniDroneBtAdaptor {
         this.write(COMMAND_KEY, buffer);
     }
 
+    writeAnimation(animation) {
+        let animations = {
+            flipFront: 0x00,
+            flipBack: 0x01,
+            flipRight: 0x02,
+            flipLeft: 0x03,
+        };
+        if (typeof animations[animation] === 'undefined') {
+            return;
+        }
+        console.log(`animating ${animation}`);
+        // this one is a little weird, don't understand the extra argument after the flip class constant ¯\_(ツ)_/¯
+        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.ANIMATION, MD_METHODS.FLIP, 0x00, animations[animation], 0x00, 0x00, 0x00]);
+        this.write(COMMAND_KEY, buffer);
+    }
+
     /**
      * Event handler for when noble discovers a peripheral
      * Validates it is a drone and attempts to connect.
@@ -294,7 +312,7 @@ class MiniDroneBtAdaptor {
         if (!isNotification || data[2] !== 2) {
             return;
         }
-        this.flightStatus =  FLIGHT_STATUSES[data[6]];
+        this.flightStatus = FLIGHT_STATUSES[data[6]];
         console.log(`Flight status = ${this.flightStatus} - ${data[6]}`);
     }
 

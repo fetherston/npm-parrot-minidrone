@@ -24,6 +24,10 @@ class Controller {
             onCirclePress: () => {},
             onTrianglePress: () => {},
             onStartPress: () => {},
+            onL1Press: () => {},
+            onL2Press: () => {},
+            onR1Press: () => {},
+            onR2Press: () => {},
         }
 
         this.options = Object.assign({}, defaults, options);
@@ -32,13 +36,17 @@ class Controller {
         this.controller = new DualShock(this.options);
 
         //add event handlers
+        this.controller.on('start:release', this.options.onStartPress);
         this.controller.on('left:move', (data) => this.onLeftAnalogMove(data));
         this.controller.on('right:move', (data) => this.onRightAnalogMove(data));
         this.controller.on('square:release', this.options.onSquarePress);
         this.controller.on('triangle:release', this.options.onTrianglePress);
         this.controller.on('circle:release', this.options.onCirclePress);
         this.controller.on('x:release', this.options.onXPress);
-        this.controller.on('start:release', this.options.onStartPress)
+        this.controller.on('l1:release', this.options.onL1Press);
+        this.controller.on('l2:release', this.options.onL2Press);
+        this.controller.on('r1:release', this.options.onR1Press);
+        this.controller.on('r2:release', this.options.onR2Press);
 
         this.controller.on('error', (data) => {
             console.log('ERROR:', data);
