@@ -3,6 +3,11 @@ let Drone = require('./Classes/Drone');
 
 let drone = new Drone();
 let controller = new Controller({
+    onStartPress: drone.connect.bind(drone),
+    onTrianglePress: drone.takeoffOrLand.bind(drone),
+    onSquarePress: drone.trim.bind(drone),
+    onCirclePress: drone.emergency.bind(drone),
+    onXPress: drone.takePicture.bind(drone),
     onRightAnalogMove: (data) => {
         drone.setFlightParams({
             roll: data.x,
@@ -15,11 +20,6 @@ let controller = new Controller({
             altitude: data.y,
         });
     },
-    onStartPress: drone.connect.bind(drone),
-    onTrianglePress: drone.takeoffOrLand.bind(drone),
-    onSquarePress: drone.trim.bind(drone),
-    onCirclePress: drone.emergency.bind(drone),
-    onXPress: drone.takePicture.bind(drone),
     onL1Press: () => {
         drone.animate('flipLeft');
     },
@@ -33,6 +33,3 @@ let controller = new Controller({
         drone.animate('flipBack');
     },
 });
-
-
-// drone.connect();

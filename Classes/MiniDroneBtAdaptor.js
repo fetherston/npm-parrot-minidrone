@@ -63,6 +63,13 @@ class MiniDroneBtAdaptor {
         this.steps[COMMAND_KEY] = 0;
         this.steps[EMERGENCY_KEY] = 0;
         this.flightStatus = null;
+        // flight param cache to only send values that have changed
+        this._flightParams = {
+            roll: 0,
+            pitch: 0,
+            yaw: 0,
+            altitude: 0,
+        };
 
         // bind noble event handlers
         this.noble.on('stateChange', (state) => this.onNobleStateChange(state));
@@ -95,8 +102,9 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     write(uuid, buffer) {
-        if (!this.characteristics) {
-            throw 'You must have bluetooth enabled and be connected to a drone before executing a command. Please ensure Bluetooth is enabled on your machine and you are connected.'
+        if (!this.characteristics.length) {
+            console.warn('You must have bluetooth enabled and be connected to a drone before executing a command. Please ensure Bluetooth is enabled on your machine and you are connected.');
+            return;
         }
 
         // Sequence number can only be stored in one byte, so we must reset after 255
@@ -126,6 +134,16 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     writeFlightParams(flightParams) {
+        // this is an optimization to only write values that have changed
+        if (flightParams.roll === this._flightParams.roll &&
+            flightParams.pitch === this._flightParams.pitch &&
+            flightParams.yaw === this._flightParams.yaw &&
+            flightParams.altitude === this._flightParams.altitude) {
+            return;
+        }
+
+        this._flightParams = flightParams;
+
         let buffer = new Buffer(19);
 
         buffer.fill(0);
@@ -136,10 +154,10 @@ class MiniDroneBtAdaptor {
         buffer.writeInt16LE(2, 4);
         buffer.writeInt16LE(0, 5);
         buffer.writeInt16LE(1, 6);
-        buffer.writeInt16LE(flightParams.roll, 7);
-        buffer.writeInt16LE(flightParams.pitch, 8);
-        buffer.writeInt16LE(flightParams.yaw, 9);
-        buffer.writeInt16LE(flightParams.altitude, 10);
+        buffer.writeInt16LE(this._flightParams.roll, 7);
+        buffer.writeInt16LE(this._flightParams.pitch, 8);
+        buffer.writeInt16LE(this._flightParams.yaw, 9);
+        buffer.writeInt16LE(this._flightParams.altitude, 10);
         buffer.writeFloatLE(0, 11);
 
         this.write(FLIGHT_PARAMS_KEY, buffer);
@@ -195,6 +213,11 @@ class MiniDroneBtAdaptor {
         this.write(COMMAND_KEY, buffer);
     }
 
+    /**
+     * Convenience method for writing animation class methods
+     * @param  {String} animation The animation direction
+     * @return {undefined}
+     */
     writeAnimation(animation) {
         let animations = {
             flipFront: 0x00,
@@ -295,7 +318,8 @@ class MiniDroneBtAdaptor {
      */
     getCharacteristic(uuid) {
         if (!this.characteristics.length) {
-            throw 'BTLE Device must be connected before calling this method';
+            console.warn('BTLE Device must be connected before calling this method');
+            return;
         }
         return this.characteristics.filter(function(c) {
             return c.uuid.search(new RegExp(uuid)) !== -1;

@@ -18,13 +18,12 @@ class Drone {
             altitude: 0,
         };
         this.options = Object.assign({}, defaults, options);
-
-        this.connected = false;
-        this.flying = false;
         this.network = null;
 
         // update loop, writes the flight params to the network every X ms
         this.eventInterval = setInterval(() => this.eventLoop(), this.options.updateMS);
+
+        this.connect();
     }
 
     /**
@@ -35,12 +34,20 @@ class Drone {
         this.flightParams = Object.assign({}, this.flightParams, flightParams);
     }
 
+    isFlying() {
+        let flightStatus = this.network.flightStatus;
+        return flightStatus === 'hovering' ||
+            flightStatus === 'flying' ||
+            flightStatus === 'rolling' ||
+            flightStatus === 'taking off';
+    }
+
     /**
      * Toggle the drone's takeoff or land command
      * @return {undefined}
      */
     takeoffOrLand() {
-        this.flying ? this.land() : this.takeOff();
+        this.isFlying() ? this.land() : this.takeOff();
     }
 
     /**
@@ -49,7 +56,6 @@ class Drone {
      */
     takeOff() {
         this.network.writeTakeoff();
-        this.flying = true
     }
 
     /**
@@ -58,7 +64,6 @@ class Drone {
      */
     land() {
         this.network.writeLand();
-        this.flying = false
     }
 
     /**
@@ -105,7 +110,7 @@ class Drone {
      * @return {[type]} [description]
      */
     eventLoop() {
-        if (!this.flying || !this.network) {
+        if (!this.network.connected) {
             return;
         }
         this.network.writeFlightParams(this.flightParams);

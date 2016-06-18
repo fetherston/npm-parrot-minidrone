@@ -31,5 +31,5 @@ Known to work with the Airborne Cargo, Airborne Night and the Rolling Spider.
 
 ## TODO:
 
-- [ ] Occasionally it won't takeoff after landing
-- [ ] After crashing you have flight state doesn't get updated in `Drone`
+- [ ] Break up `MiniDroneBtAdaptor` into smaller classes
+- [ ] After crashing flight state doesn't get updated in `Drone`
