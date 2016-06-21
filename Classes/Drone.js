@@ -1,4 +1,4 @@
-var MiniDroneBtAdaptor =  require('./MiniDroneBtAdaptor');
+const MiniDroneBtAdaptor = require('./MiniDroneBtAdaptor');
 
 /**
  * Drone Class
@@ -8,7 +8,7 @@ var MiniDroneBtAdaptor =  require('./MiniDroneBtAdaptor');
  */
 class Drone {
     constructor(options) {
-        let defaults = {
+        const defaults = {
             updateMS: 100,
         };
         this.flightParams = {
@@ -35,7 +35,7 @@ class Drone {
     }
 
     isFlying() {
-        let flightStatus = this.network.flightStatus;
+        const flightStatus = this.network.flightStatus;
         return flightStatus === 'hovering' ||
             flightStatus === 'flying' ||
             flightStatus === 'rolling' ||

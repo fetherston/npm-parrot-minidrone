@@ -1,8 +1,8 @@
-let Controller = require('./Classes/Controller');
-let Drone = require('./Classes/Drone');
+const Controller = require('./Classes/Controller');
+const Drone = require('./Classes/Drone');
 
-let drone = new Drone();
-let controller = new Controller({
+const drone = new Drone();
+const controller = new Controller({
     onStartPress: drone.connect.bind(drone),
     onTrianglePress: drone.takeoffOrLand.bind(drone),
     onSquarePress: drone.trim.bind(drone),

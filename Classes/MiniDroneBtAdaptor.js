@@ -33,7 +33,7 @@ const COMMAND_KEY = 'fa0b';
 const EMERGENCY_KEY = 'fa0c';
 // TODO: need all these?
 const CHARACTERISTIC_MAP = [
-    BATTERY_KEY, FLIGHT_STATUS_KEY, 'fb1b', 'fb1c', 'fd22', 'fd23', 'fd24', 'fd52', 'fd53', 'fd54'
+    BATTERY_KEY, FLIGHT_STATUS_KEY, 'fb1b', 'fb1c', 'fd22', 'fd23', 'fd24', 'fd52', 'fd53', 'fd54',
 ];
 
 // Drone IDs
@@ -41,7 +41,8 @@ const MANUFACTURER_SERIALS = ['4300cf1900090100', '4300cf1909090100', '4300cf190
 const DRONE_PREFIXES = ['RS_', 'Mars_', 'Travis_', 'Maclan_'];
 const MD_DEVICE_TYPE = 0x02;
 
-const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying', 'landing', 'emergency', 'rolling', 'initializing'];
+const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying',
+                         'landing', 'emergency', 'rolling', 'initializing'];
 
 /**
  * Network adapter between drone and Noble BTLE
@@ -49,7 +50,7 @@ const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying', 'landing'
  * and steps bullshit
  */
 class MiniDroneBtAdaptor {
-    constructor(options) {
+    constructor() {
         // noble is not a constructor
         this.noble = require('noble');
         this.connected = false;
@@ -64,16 +65,17 @@ class MiniDroneBtAdaptor {
         this.steps[EMERGENCY_KEY] = 0;
         this.flightStatus = null;
         // flight param cache to only send values that have changed
-        this._flightParams = {
+        this.flightParams = {
             roll: 0,
             pitch: 0,
             yaw: 0,
             altitude: 0,
         };
+        this.lastFpWrite = 0;
 
         // bind noble event handlers
         this.noble.on('stateChange', (state) => this.onNobleStateChange(state));
-        this.noble.on('discover', (peripheral) =>  this.onPeripheralDiscovery(peripheral));
+        this.noble.on('discover', (peripheral) => this.onPeripheralDiscovery(peripheral));
       // this.noble.on('warning', function(message) {
     }
 
@@ -84,12 +86,8 @@ class MiniDroneBtAdaptor {
      */
     onNobleStateChange(state) {
         console.log('Noble State Change ', state);
-        switch (state) {
-            case 'poweredOn':
-                this.noble.startScanning();
-                break;
-            default:
-                break;
+        if (state === 'poweredOn') {
+            this.noble.startScanning();
         }
     }
 
@@ -103,7 +101,7 @@ class MiniDroneBtAdaptor {
      */
     write(uuid, buffer) {
         if (!this.characteristics.length) {
-            console.warn('You must have bluetooth enabled and be connected to a drone before executing a command. Please ensure Bluetooth is enabled on your machine and you are connected.');
+            console.warn('You must have bluetooth enabled and be connected to a drone before executing a command.');
             return;
         }
 
@@ -122,7 +120,7 @@ class MiniDroneBtAdaptor {
      * @return {buffer}      A freshly created Buffer stream
      */
     createBuffer(uuid, args = []) {
-        let buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
+        const buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
         return new Buffer(buffArray.concat(args));
     }
 
@@ -135,16 +133,17 @@ class MiniDroneBtAdaptor {
      */
     writeFlightParams(flightParams) {
         // this is an optimization to only write values that have changed
-        if (flightParams.roll === this._flightParams.roll &&
-            flightParams.pitch === this._flightParams.pitch &&
-            flightParams.yaw === this._flightParams.yaw &&
-            flightParams.altitude === this._flightParams.altitude) {
+        if (flightParams.roll === this.flightParams.roll &&
+            flightParams.pitch === this.flightParams.pitch &&
+            flightParams.yaw === this.flightParams.yaw &&
+            flightParams.altitude === this.flightParams.altitude &&
+            Date.now() - this.lastFpWrite <= 300) {
             return;
         }
 
-        this._flightParams = flightParams;
-
-        let buffer = new Buffer(19);
+        const buffer = new Buffer(19);
+        this.flightParams = flightParams;
+        this.lastFpWrite = Date.now();
 
         buffer.fill(0);
         buffer.writeInt16LE(2, 0);
@@ -154,10 +153,10 @@ class MiniDroneBtAdaptor {
         buffer.writeInt16LE(2, 4);
         buffer.writeInt16LE(0, 5);
         buffer.writeInt16LE(1, 6);
-        buffer.writeInt16LE(this._flightParams.roll, 7);
-        buffer.writeInt16LE(this._flightParams.pitch, 8);
-        buffer.writeInt16LE(this._flightParams.yaw, 9);
-        buffer.writeInt16LE(this._flightParams.altitude, 10);
+        buffer.writeInt16LE(this.flightParams.roll, 7);
+        buffer.writeInt16LE(this.flightParams.pitch, 8);
+        buffer.writeInt16LE(this.flightParams.yaw, 9);
+        buffer.writeInt16LE(this.flightParams.altitude, 10);
         buffer.writeFloatLE(0, 11);
 
         this.write(FLIGHT_PARAMS_KEY, buffer);
@@ -169,7 +168,7 @@ class MiniDroneBtAdaptor {
      */
     writeTrim() {
         console.log('Trim');
-        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TRIM, 0x00]);
+        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TRIM, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -179,7 +178,7 @@ class MiniDroneBtAdaptor {
      */
     writeTakeoff() {
         console.log('takeoff');
-        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TAKEOFF, 0x00]);
+        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.TAKEOFF, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -189,7 +188,7 @@ class MiniDroneBtAdaptor {
      */
     writeLand() {
         console.log('land');
-        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.LAND, 0x00]);
+        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.PILOTING, MD_METHODS.LAND, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -199,7 +198,7 @@ class MiniDroneBtAdaptor {
      */
     writeEmergency() {
         console.log('panic', this.steps);
-        let buffer = this.createBuffer(EMERGENCY_KEY, [MD_CLASSES.PILOTING, MD_METHODS.EMERGENCY, 0x00]);
+        const buffer = this.createBuffer(EMERGENCY_KEY, [MD_CLASSES.PILOTING, MD_METHODS.EMERGENCY, 0x00]);
         this.write(EMERGENCY_KEY, buffer);
     }
 
@@ -209,7 +208,7 @@ class MiniDroneBtAdaptor {
      */
     writeTakePicture() {
         console.log('take picture');
-        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.MEDIA_RECORD, MD_METHODS.PICTURE, 0x00]);
+        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.MEDIA_RECORD, MD_METHODS.PICTURE, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -219,7 +218,7 @@ class MiniDroneBtAdaptor {
      * @return {undefined}
      */
     writeAnimation(animation) {
-        let animations = {
+        const animations = {
             flipFront: 0x00,
             flipBack: 0x01,
             flipRight: 0x02,
@@ -229,8 +228,9 @@ class MiniDroneBtAdaptor {
             return;
         }
         console.log(`animating ${animation}`);
-        // this one is a little weird, don't understand the extra argument after the flip class constant ¯\_(ツ)_/¯
-        let buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.ANIMATION, MD_METHODS.FLIP, 0x00, animations[animation], 0x00, 0x00, 0x00]);
+        // this one is a little weird, don't understand the extra
+        // argument after the flip class constant ¯\_(ツ)_/¯
+        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.ANIMATION, MD_METHODS.FLIP, 0x00, animations[animation], 0x00, 0x00, 0x00]);
         this.write(COMMAND_KEY, buffer);
     }
 
@@ -245,11 +245,10 @@ class MiniDroneBtAdaptor {
         if (!this.validatePeripheral(peripheral)) {
             return;
         }
-        console.log('Peripheral found ' + peripheral.advertisement.localName , peripheral.advertisement.manufacturerData);
+        console.log(`Peripheral found ${peripheral.advertisement.localName}`);
         peripheral.connect((error) => {
             if (error) {
                 throw error;
-                return;
             }
             this.peripheral = peripheral;
             this.noble.stopScanning();
@@ -265,10 +264,9 @@ class MiniDroneBtAdaptor {
         if (!this.peripheral) {
             return;
         }
-        this.peripheral.discoverAllServicesAndCharacteristics((error, services, characteristics) => {
-            if (error) {
-              throw error;
-              return;
+        this.peripheral.discoverAllServicesAndCharacteristics((err, services, characteristics) => {
+            if (err) {
+                throw err;
             }
             this.characteristics = characteristics;
 
@@ -278,16 +276,16 @@ class MiniDroneBtAdaptor {
             });
 
             this.connected = true;
-            console.log('Device connected ' + this.peripheral.advertisement.localName);
+            console.log(`Device connected ${this.peripheral.advertisement.localName}`);
 
             // Register listener for battery notifications.
-            this.getCharacteristic(BATTERY_KEY).on('data',
-                (data, isNotification) => { this.onBatteryStatusChange(data, isNotification);
+            this.getCharacteristic(BATTERY_KEY).on('data', (data, isNotification) => {
+                this.onBatteryStatusChange(data, isNotification);
             });
 
             // Register a listener for flight status changes
-            this.getCharacteristic(FLIGHT_STATUS_KEY).on('data',
-                (data, isNotification) => { this.onFlightStatusChange(data,isNotification);
+            this.getCharacteristic(FLIGHT_STATUS_KEY).on('data', (data, isNotification) => {
+                this.onFlightStatusChange(data, isNotification);
             });
         });
     }
@@ -302,10 +300,12 @@ class MiniDroneBtAdaptor {
             return false;
         }
 
-        let localName = peripheral.advertisement.localName;
-        let manufacturer = peripheral.advertisement.manufacturerData;
-        let localNameMatch = localName && DRONE_PREFIXES.some((prefix) => { return localName.indexOf(prefix) >= 0; });
-        let manufacturerMatch = manufacturer && (MANUFACTURER_SERIALS.indexOf(manufacturer) >= 0);
+        const localName = peripheral.advertisement.localName;
+        const manufacturer = peripheral.advertisement.manufacturerData;
+        const localNameMatch = localName && DRONE_PREFIXES.some((prefix) =>
+            localName.indexOf(prefix) >= 0
+        );
+        const manufacturerMatch = manufacturer && (MANUFACTURER_SERIALS.indexOf(manufacturer) >= 0);
 
         // Is true for EITHER an "RS_" name OR manufacturer code.
         return localNameMatch || manufacturerMatch;
@@ -319,11 +319,9 @@ class MiniDroneBtAdaptor {
     getCharacteristic(uuid) {
         if (!this.characteristics.length) {
             console.warn('BTLE Device must be connected before calling this method');
-            return;
+            return false;
         }
-        return this.characteristics.filter(function(c) {
-            return c.uuid.search(new RegExp(uuid)) !== -1;
-        })[0];
+        return this.characteristics.filter((c) => c.uuid.search(new RegExp(uuid)) !== -1)[0];
     }
 
     /**
@@ -348,7 +346,7 @@ class MiniDroneBtAdaptor {
      */
     onBatteryStatusChange(data, isNotification) {
         if (!isNotification) {
-          return;
+            return;
         }
         this.batteryLevel = data[data.length - 1];
         console.log(`Battery level: ${this.batteryLevel}%`);

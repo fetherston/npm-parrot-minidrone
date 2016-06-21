@@ -1,4 +1,4 @@
-var DualShock = require('dualshock-controller');
+const DualShock = require('dualshock-controller');
 
 /**
  * Wrapper class that abstracts and normalizes
@@ -7,7 +7,7 @@ var DualShock = require('dualshock-controller');
 class Controller {
 
     constructor(options = {}) {
-        let defaults = {
+        const defaults = {
             // 'dualshock4-generic-driver' to use newer controller,
             config: 'dualShock3',
             // smooths the output from the accelerometers (moving averages) defaults to true
@@ -20,7 +20,7 @@ class Controller {
             onRightAnalogMove: () => {},
             onLeftAnalogMove: () => {},
             onXPress: () => {},
-            onSquarePress: ()=>{},
+            onSquarePress: () => {},
             onCirclePress: () => {},
             onTrianglePress: () => {},
             onStartPress: () => {},
@@ -28,14 +28,14 @@ class Controller {
             onL2Press: () => {},
             onR1Press: () => {},
             onR2Press: () => {},
-        }
+        };
 
         this.options = Object.assign({}, defaults, options);
 
         // TODO: only pass DS options here
         this.controller = new DualShock(this.options);
 
-        //add event handlers
+        // add event handlers
         this.controller.on('start:release', this.options.onStartPress);
         this.controller.on('left:move', (data) => this.onLeftAnalogMove(data));
         this.controller.on('right:move', (data) => this.onRightAnalogMove(data));
@@ -64,8 +64,9 @@ class Controller {
      */
     normalizeAnalogInputs(value) {
         return Object.keys(value).reduce((prev, key) => {
-            let val = Math.round((128 - value[key]) / 128 * this.options.sensitivity);
-            prev[key] = Math.abs(val) > 1 ? val: 0;
+            const val = Math.round((128 - value[key]) / 128 * this.options.sensitivity);
+            const cleanPrev = prev;
+            cleanPrev[key] = Math.abs(val) > 1 ? val : 0;
             return prev;
         }, {});
     }
@@ -78,9 +79,9 @@ class Controller {
      * @return {undefined}
      */
     onLeftAnalogMove(data) {
-        data = this.normalizeAnalogInputs(data);
-        data.x = data.x * -1; // inverse
-        this.options.onLeftAnalogMove(data);
+        const cleanData = this.normalizeAnalogInputs(data);
+        cleanData.x = cleanData.x * -1; // inverse
+        this.options.onLeftAnalogMove(cleanData);
     }
 
     /**
@@ -91,9 +92,9 @@ class Controller {
      * @return {undefined}
      */
     onRightAnalogMove(data) {
-        data = this.normalizeAnalogInputs(data);
-        data.x = data.x * -1; // inverse
-        this.options.onRightAnalogMove(data);
+        const cleanData = this.normalizeAnalogInputs(data);
+        cleanData.x = cleanData.x * -1; // inverse
+        this.options.onRightAnalogMove(cleanData);
     }
 }
 
