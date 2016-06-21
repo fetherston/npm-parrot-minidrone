@@ -96,6 +96,12 @@ class Drone {
         this.network.writeEmergency();
     }
 
+    /**
+     * Preform the drone's animation routines
+     * @param  {string} animation one of the following animation methods:
+     *                  flipFront, flipBack, flipRight, flipLeft
+     * @return {undefined}
+     */
     animate(animation) {
         this.network.writeAnimation(animation);
     }
@@ -122,6 +128,10 @@ class Drone {
         this.network.writeFlightParams(this.flightParams);
     }
 
+    /**
+     * Returns the battery level of the drone
+     * @return {integer} The battery level %
+     */
     getBatteryLevel() {
         return this.network.batteryLevel;
     }

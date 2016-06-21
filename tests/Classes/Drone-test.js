@@ -1,7 +1,8 @@
 /* eslint no-undef: 0 */
 const chai = require('chai');
-const expect = chai.expect; // we are using the "expect" style of Chai
+const expect = chai.expect;
 const Drone = require('./../../Classes/Drone');
+const MiniDroneBtAdaptor = require('./../../Classes/MiniDroneBtAdaptor');
 
 describe('Drone', () => {
     it('should bootstrap local vars correctly', () => {
@@ -15,6 +16,17 @@ describe('Drone', () => {
     it('should report the initial flight status correctly', () => {
         const drone = new Drone();
         expect(drone.isFlying()).to.equal(false);
+    });
+
+    it('should contain drone flight methods', () => {
+        const drone = new Drone();
+        expect(drone.trim).to.be.a('function');
+        expect(drone.takePicture).to.be.a('function');
+        expect(drone.land).to.be.a('function');
+        expect(drone.takeOff).to.be.a('function');
+        expect(drone.takeoffOrLand).to.be.a('function');
+        expect(drone.emergency).to.be.a('function');
+        expect(drone.animate).to.be.a('function');
     });
 
     it('should set options correctly', () => {
@@ -41,5 +53,12 @@ describe('Drone', () => {
         });
         drone.setFlightParams(newParams);
         expect(drone.flightParams).to.deep.equal(newParams);
+    });
+
+    it('should attempt to connect', () => {
+        const drone = new Drone();
+        expect(drone.network).to.equal(null);
+        drone.connect();
+        expect(drone.network).to.be.an.instanceof(MiniDroneBtAdaptor);
     });
 });
