@@ -10,6 +10,7 @@ class Drone {
     constructor(options) {
         const defaults = {
             updateMS: 100,
+            autoconnect: false,
         };
         this.flightParams = {
             roll: 0,
@@ -23,7 +24,9 @@ class Drone {
         // update loop, writes the flight params to the network every X ms
         this.eventInterval = setInterval(() => this.eventLoop(), this.options.updateMS);
 
-        this.connect();
+        if (this.options.autoconnect) {
+            this.connect();
+        }
     }
 
     /**
@@ -35,6 +38,9 @@ class Drone {
     }
 
     isFlying() {
+        if (!this.network) {
+            return false;
+        }
         const flightStatus = this.network.flightStatus;
         return flightStatus === 'hovering' ||
             flightStatus === 'flying' ||

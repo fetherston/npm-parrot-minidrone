@@ -1,7 +1,9 @@
 const Controller = require('./Classes/Controller');
 const Drone = require('./Classes/Drone');
 
-const drone = new Drone();
+const drone = new Drone({
+    autoconnect: true,
+});
 const controller = new Controller({
     onStartPress: drone.connect.bind(drone),
     onTrianglePress: drone.takeoffOrLand.bind(drone),
