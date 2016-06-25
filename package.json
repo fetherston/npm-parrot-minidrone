@@ -4,7 +4,8 @@
   "description": "Node package that exposes a simple API for flying Parrot MiniDrones such as Rolling Spider, Airborne Cargo, Night and Hydrofoil.",
   "main": "drone.js",
   "scripts": {
-    "test": "mocha tests --recursive"
+    "test": "mocha tests --recursive",
+    "docs": "jsdoc ./lib ./README.md -d ./docs/"
   },
   "author": "Christopher Fetherston",
   "license": "MIT",
@@ -22,12 +23,13 @@
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-import": "^1.8.1",
+    "jsdoc": "^3.4.0",
     "mocha": "^2.5.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/fetherston/npm-parrot-minidrone.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fetherston/npm-parrot-minidrone.git"
   }
 }
