@@ -3,7 +3,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const SinonChai = require('sinon-chai');
 const Drone = require('./../../lib/Drone');
-const MiniDroneBtAdaptor = require('./../../lib/MiniDroneBtAdaptor');
+const MiniDroneBtAdapter = require('./../../lib/MiniDroneBtAdapter');
 chai.use(SinonChai);
 
 describe('Drone', () => {
@@ -61,6 +61,6 @@ describe('Drone', () => {
         const drone = new Drone();
         expect(drone.network).to.equal(null);
         drone.connect();
-        expect(drone.network).to.be.an.instanceof(MiniDroneBtAdaptor);
+        expect(drone.network).to.be.an.instanceof(MiniDroneBtAdapter);
     });
 });
