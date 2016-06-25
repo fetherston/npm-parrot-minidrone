@@ -2,6 +2,8 @@
 # Fly Parrot MiniDrones with Node
 This package wraps the BlueTooth low energy library Noble to expose a simple API for flying Parrot MiniDrones. That includes the Rolling Spider, Airborne Cargo, Night and Hydrofoil models. Unlike other libraries that are designed to run stepped commands, this library is designed to allow continuous control through any input device.
 
+### [View the documentation](http://fetherston.github.io/npm-parrot-minidrone)
+
 ## Dependencies
 - Noble requires Xcode. Download and install the latest version from Apple's developer network
 - Node >= 6.0.0
