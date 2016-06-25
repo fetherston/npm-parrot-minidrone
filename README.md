@@ -32,8 +32,9 @@ Follow these directions from the root of the project to fly with a PS3/4 control
 
 ### Keyboard
 To fly with the keyboard follow the below instructions.
+
 1. Turn on the drone
-1. Run 'node examples/keyboard/drone.js'
+1. Run `node examples/keyboard/drone.js`
 1. Wait to see the drone connected message in the console output
 
 #### Control Layout
