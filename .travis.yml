@@ -1,0 +1,17 @@
+os:
+  - linux
+  - osx
+language: cpp
+env:
+  - NODE_VERSION="6.0"
+matrix:
+  fast_finish: true
+before_install:
+  - git clone https://github.com/creationix/nvm.git /tmp/.nvm;
+  - source /tmp/.nvm/nvm.sh;
+  - nvm install $NODE_VERSION;
+  - nvm use --delete-prefix $NODE_VERSION;
+install:
+  - npm install
+script:
+  - npm test
