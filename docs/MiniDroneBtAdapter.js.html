@@ -27,6 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const Logger = require('winston');
+const EventEmitter = require('events');
 
 // MiniDrone Command classes and class methods
 // https://github.com/Parrot-Developers/libARCommands/blob/master/Xml/MiniDrone_commands.xml
@@ -76,8 +77,9 @@ const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying',
  *
  * @author Christopher Fetherston &lt;chris@cfetherston.com>
  */
-class MiniDroneBtAdapter {
+class MiniDroneBtAdapter extends EventEmitter {
     constructor() {
+        super();
         // noble is not a constructor
         this.noble = require('noble');
         this.connected = false;
@@ -188,6 +190,7 @@ class MiniDroneBtAdapter {
         buffer.writeFloatLE(0, 11);
 
         this.write(FLIGHT_PARAMS_KEY, buffer);
+        this.emit('flightParamChange', this.flightParams);
     }
 
     /**
@@ -242,7 +245,7 @@ class MiniDroneBtAdapter {
 
     /**
      * Convenience method for writing animation class methods
-     * @param  {String} animation The animation direction
+     * @param {String} animation The animation direction
      * @return {undefined}
      */
     writeAnimation(animation) {
@@ -266,7 +269,7 @@ class MiniDroneBtAdapter {
      * Event handler for when noble discovers a peripheral
      * Validates it is a drone and attempts to connect.
      *
-     * @param  {Peripheral} peripheral a noble peripheral class
+     * @param {Peripheral} peripheral a noble peripheral class
      * @return {undefined}
      */
     onPeripheralDiscovery(peripheral) {
@@ -303,9 +306,6 @@ class MiniDroneBtAdapter {
                 this.getCharacteristic(key).subscribe();
             });
 
-            this.connected = true;
-            Logger.info(`Device connected ${this.peripheral.advertisement.localName}`);
-
             // Register listener for battery notifications.
             this.getCharacteristic(BATTERY_KEY).on('data', (data, isNotification) => {
                 this.onBatteryStatusChange(data, isNotification);
@@ -315,12 +315,18 @@ class MiniDroneBtAdapter {
             this.getCharacteristic(FLIGHT_STATUS_KEY).on('data', (data, isNotification) => {
                 this.onFlightStatusChange(data, isNotification);
             });
+
+            this.connected = true;
+            Logger.info(`Device connected ${this.peripheral.advertisement.localName}`);
+
+            // I don't know why this needs some time
+            setTimeout(() => this.emit('connected'), 200);
         });
     }
 
     /**
      * Validates a noble Peripheral class is a Parrot MiniDrone
-     * @param  {Peripheral} peripheral a noble peripheral object class
+     * @param {Peripheral} peripheral a noble peripheral object class
      * @return {boolean} If the peripheral is a drone
      */
     validatePeripheral(peripheral) {
@@ -341,8 +347,8 @@ class MiniDroneBtAdapter {
 
     /**
      * Finds a Noble Characteristic class for the given characteristic UUID
-     * @param  {String} uuid The characteristics UUID
-     * @return {Characteristic}      The Noble Characteristic corresponding to that UUID
+     * @param {String} uuid The characteristics UUID
+     * @return {Characteristic} The Noble Characteristic corresponding to that UUID
      */
     getCharacteristic(uuid) {
         if (!this.characteristics.length) {
@@ -354,8 +360,8 @@ class MiniDroneBtAdapter {
 
     /**
      * Event handler for when the drone broadcasts a flight status change
-     * @param  {Object}  data           The event data
-     * @param  {Boolean} isNotification If the broadcast event is a notification
+     * @param {Object} data The event data
+     * @param {Boolean} isNotification If the broadcast event is a notification
      * @return {undefined}
      */
     onFlightStatusChange(data, isNotification) {
@@ -363,13 +369,14 @@ class MiniDroneBtAdapter {
             return;
         }
         this.flightStatus = FLIGHT_STATUSES[data[6]];
+        this.emit('flightStatusChange', this.flightStatus);
         Logger.debug(`Flight status = ${this.flightStatus} - ${data[6]}`);
     }
 
     /**
      * Event handler for when the drone broadcasts a batter status change
-     * @param  {Object}  data           The event data
-     * @param  {Boolean} isNotification If the broadcast event is a notification
+     * @param {Object} data he event data
+     * @param {Boolean} isNotification If the broadcast event is a notification
      * @return {undefined}
      */
     onBatteryStatusChange(data, isNotification) {
@@ -392,13 +399,13 @@ module.exports = MiniDroneBtAdapter;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Drone.html">Drone</a></li><li><a href="MiniDroneBtAdapter.html">MiniDroneBtAdapter</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Drone.html">Drone</a></li><li><a href="MiniDroneBtAdapter.html">MiniDroneBtAdapter</a></li></ul><h3>Events</h3><ul><li><a href="Drone.html#event:connected">connected</a></li><li><a href="Drone.html#event:flightParamChange">flightParamChange</a></li><li><a href="Drone.html#event:flightStatusChange">flightStatusChange</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jun 25 2016 10:36:19 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jun 25 2016 11:51:12 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

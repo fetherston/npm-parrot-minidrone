@@ -1,12 +1,33 @@
 ![Travis Status](https://travis-ci.org/fetherston/npm-parrot-minidrone.svg?branch=master)
 # Fly Parrot MiniDrones with Node
-This package wraps the BlueTooth low energy library Noble to expose a simple API for flying Parrot MiniDrones. That includes the Rolling Spider, Airborne Cargo, Night and Hydrofoil models. Unlike other libraries that are designed to run stepped commands, this library is designed to allow continuous control through any input device.
+This package wraps the BlueTooth low energy library Noble to expose a simple API for flying [Parrot MiniDrones](http://www.parrot.com/usa/products/minidrones/). That includes the Rolling Spider, Airborne Cargo, Night and Hydrofoil models. Unlike other libraries that are designed to run stepped commands, this library is designed to allow continuous control through any input device.
 
 ### [View the documentation](http://fetherston.github.io/npm-parrot-minidrone)
 
 ## Dependencies
 - Noble requires Xcode. Download and install the latest version from Apple's developer network
 - Node >= 6.0.0
+
+## Get Started in 60 Seconds
+
+1. Grab the module `npm install parrot-minidrone`
+1. Create `index.js` with the below code
+1. Run the script `node index.js`
+
+```
+const Drone = require('parrot-minidrone');
+const drone = new Drone({
+    autoconnect: true,
+});
+
+drone.on('connected', () => drone.takeOff());
+drone.on('flightStatusChange', (status) => {
+    if (status === 'hovering') {
+        drone.land();
+        process.exit();
+    }
+});
+```
 
 ## Examples
 In the examples folder of this library are a few scripts using the API to fly drones with various input devices.
