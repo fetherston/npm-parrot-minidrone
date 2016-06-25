@@ -7,7 +7,7 @@
     "test": "mocha tests --recursive",
     "docs": "jsdoc ./lib ./README.md -d ./docs/"
   },
-  "author": "Christopher Fetherston",
+  "author": "Christopher Fetherston <chris@cfetherston.com> (https://github.com/fetherston)",
   "license": "MIT",
   "dependencies": {
     "dualshock-controller": "^0.6.9",

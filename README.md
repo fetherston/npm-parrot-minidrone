@@ -57,4 +57,5 @@ To fly with the keyboard follow the below instructions.
 
 ## Tests
 To run the test runner execute `npm test`.
+
 ![Travis Status](https://travis-ci.org/fetherston/npm-parrot-minidrone.svg?branch=master)
