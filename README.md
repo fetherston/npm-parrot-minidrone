@@ -1,3 +1,4 @@
+![Travis Status](https://travis-ci.org/fetherston/npm-parrot-minidrone.svg?branch=master)
 # Fly Parrot MiniDrones with Node
 This package wraps the BlueTooth low energy library Noble to expose a simple API for flying Parrot MiniDrones. That includes the Rolling Spider, Airborne Cargo, Night and Hydrofoil models.
 
@@ -54,3 +55,4 @@ To fly with the keyboard follow the below instructions.
 
 ## Tests
 To run the test runner execute `npm test`.
+![Travis Status](https://travis-ci.org/fetherston/npm-parrot-minidrone.svg?branch=master)
