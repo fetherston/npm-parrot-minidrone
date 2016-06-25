@@ -3,7 +3,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const SinonChai = require('sinon-chai');
 const sinon = require('sinon');
-const MiniDroneBtAdaptor = require('./../../Classes/MiniDroneBtAdaptor');
+const MiniDroneBtAdaptor = require('./../../lib/MiniDroneBtAdaptor');
 const bufferEqual = require('./helpers/bufferEqual');
 chai.use(SinonChai);
 

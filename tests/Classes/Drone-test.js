@@ -2,9 +2,8 @@
 const chai = require('chai');
 const expect = chai.expect;
 const SinonChai = require('sinon-chai');
-const sinon = require('sinon');
-const Drone = require('./../../Classes/Drone');
-const MiniDroneBtAdaptor = require('./../../Classes/MiniDroneBtAdaptor');
+const Drone = require('./../../lib/Drone');
+const MiniDroneBtAdaptor = require('./../../lib/MiniDroneBtAdaptor');
 chai.use(SinonChai);
 
 describe('Drone', () => {

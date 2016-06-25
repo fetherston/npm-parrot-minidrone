@@ -1,21 +1,22 @@
-# Node.js script to fly Parrot MiniDrones with a PS3 DualShock Controller
-This script wraps the Noble BLE JS library and the PS3 & PS4 DualShock library so that you can fly a Parrot MiniDrone with a PS3 controller, Bluetooth and a Node.js client.
+# Fly Parrot MiniDrones with Node
+This package wraps the BlueTooth low energy library Noble to expose a simple API for flying Parrot MiniDrones. That includes the Rolling Spider, Airborne Cargo, Night and Hydrofoil models.
 
-Why? I didn't want to jailbreak an iOS device or root an Android phone to use a PS3 controller and flying these little drones with analog sticks is _way_ better than flying it with a smart phone.
+## Dependencies
+- Noble requires Xcode. Download and install the latest version from Apple's developer network
+- Node >= 6.0.0
 
-Known to work with the Airborne Cargo, Airborne Night and the Rolling Spider.
+## Examples
+In the examples folder of this library are a few scripts using the API to fly drones with various input devices.
 
-## How to use
+### Dualshock PlayStation Controller
+Follow these directions from the root of the project to fly with a PS3/4 controller
 
-1. Meet the [prerequisites for Noble](https://github.com/sandeepmistry/noble#prerequisites).
-1. Install dependencies `npm install`
-1. Plug in the PlayStation controller via USB
-1. Press the PS button on the controller
-1. Turn the drone on
-1. Run the script `node drone.js`
-1. Press start on the PlayStation controller
+1. Turn on the drone
+1. Plug in the controller via USB or connect to your computer via Bluetooth
+1. Run `node examples/dualshock-ps3-controller/drone.js`
+1. Wait to see the drone connected message in the console output
 
-## Control Layout
+#### Control Layout
 *Button* | Function
 --- | ---
 **Right Analog Stick** | Altitude, yaw
@@ -29,7 +30,26 @@ Known to work with the Airborne Cargo, Airborne Night and the Rolling Spider.
 **L2** | Front Flip
 **R2** | Back Flip
 
-## TODO:
+### Keyboard
+To fly with the keyboard follow the below instructions.
+1. Turn on the drone
+1. Run 'node examples/keyboard/drone.js'
+1. Wait to see the drone connected message in the console output
 
-- [ ] Break up `MiniDroneBtAdaptor` into smaller classes
-- [ ] After crashing flight state doesn't get updated in `Drone`
+#### Control Layout
+*Key* | Function
+--- | ---
+**Arrow Up** | Pitch +
+**Arrow Down** | Pitch -
+**Left Arrow** | Roll left
+**Left Arrow** | Roll right
+**w** | Altitude +
+**s** | Altitude +
+**a** | Yaw left
+**d** | Yaw right
+**t** | Toggle takeoff & land
+**f** | Flattrim
+**Escape** | Emergency land
+
+## Tests
+To run the test runner execute `npm test`.

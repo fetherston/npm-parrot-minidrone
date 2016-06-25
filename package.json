@@ -1,7 +1,7 @@
 {
-  "name": "parrot-minidrone-ps3",
+  "name": "parrot-minidrone",
   "version": "1.0.0",
-  "description": "Node script to fly a Parrot MiniDrone (Cargo, Night, Rolling Spider) with a DualShock 3 controller connected to your machine via USB or Bluetooth",
+  "description": "Node package that exposes a simple API for flying Parrot MiniDrones such as Rolling Spider, Airborne Cargo, Night and Hydrofoil.",
   "main": "drone.js",
   "scripts": {
     "test": "mocha tests --recursive"
@@ -10,7 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "dualshock-controller": "^0.6.9",
-    "noble": "^1.6.0"
+    "keypress": "^0.2.1",
+    "noble": "^1.6.0",
+    "winston": "^2.2.0"
   },
   "engine": "node >= 6.0.0",
   "devDependencies": {
@@ -23,5 +25,9 @@
     "mocha": "^2.5.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/fetherston/npm-parrot-minidrone.git"
   }
 }

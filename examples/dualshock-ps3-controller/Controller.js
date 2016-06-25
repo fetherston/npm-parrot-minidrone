@@ -48,10 +48,6 @@ class Controller {
         this.controller.on('r1:release', this.options.onR1Press);
         this.controller.on('r2:release', this.options.onR2Press);
 
-        this.controller.on('error', (data) => {
-            console.log('ERROR:', data);
-        });
-
         this.controller.connect();
     }
 
