@@ -1,8 +1,11 @@
 /* eslint no-undef: 0 */
 const chai = require('chai');
 const expect = chai.expect;
+const SinonChai = require('sinon-chai');
+const sinon = require('sinon');
 const Drone = require('./../../Classes/Drone');
 const MiniDroneBtAdaptor = require('./../../Classes/MiniDroneBtAdaptor');
+chai.use(SinonChai);
 
 describe('Drone', () => {
     it('should bootstrap local vars correctly', () => {
@@ -60,9 +63,5 @@ describe('Drone', () => {
         expect(drone.network).to.equal(null);
         drone.connect();
         expect(drone.network).to.be.an.instanceof(MiniDroneBtAdaptor);
-    });
-
-    it('should not write flight parameters until it is connected', () => {
-        // TODO
     });
 });
