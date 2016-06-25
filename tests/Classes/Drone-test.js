@@ -61,4 +61,8 @@ describe('Drone', () => {
         drone.connect();
         expect(drone.network).to.be.an.instanceof(MiniDroneBtAdaptor);
     });
+
+    it('should not write flight parameters until it is connected', () => {
+        // TODO
+    });
 });

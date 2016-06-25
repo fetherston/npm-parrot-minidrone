@@ -24,7 +24,6 @@ const MD_DATA_TYPES = {
 
 /**
  * BTLE Characteristic keys
- *
  */
 const BATTERY_KEY = 'fb0f';
 const FLIGHT_STATUS_KEY = 'fb0e';
@@ -120,7 +119,7 @@ class MiniDroneBtAdaptor {
      * @return {buffer}      A freshly created Buffer stream
      */
     createBuffer(uuid, args = []) {
-        const buffArray = [MD_DATA_TYPES.DATA, ++this.steps[COMMAND_KEY] & 0xFF, MD_DEVICE_TYPE];
+        const buffArray = [MD_DATA_TYPES.DATA, ++this.steps[uuid] & 0xFF, MD_DEVICE_TYPE];
         return new Buffer(buffArray.concat(args));
     }
 

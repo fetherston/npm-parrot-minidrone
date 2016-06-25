@@ -122,7 +122,7 @@ class Drone {
      * @return {[type]} [description]
      */
     eventLoop() {
-        if (!this.network.connected) {
+        if (!this.network || !this.network.connected) {
             return;
         }
         this.network.writeFlightParams(this.flightParams);

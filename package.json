@@ -4,7 +4,7 @@
   "description": "Node script to fly a Parrot MiniDrone (Cargo, Night, Rolling Spider) with a DualShock 3 controller connected to your machine via USB or Bluetooth",
   "main": "drone.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests --recursive"
   },
   "author": "Christopher Fetherston",
   "license": "MIT",
@@ -20,6 +20,8 @@
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-import": "^1.8.1",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   }
 }
