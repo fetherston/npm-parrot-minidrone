@@ -1,6 +1,6 @@
 {
   "name": "parrot-minidrone",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node package that exposes a simple API for flying Parrot MiniDrones such as Rolling Spider, Airborne Cargo, Night and Hydrofoil.",
   "main": "drone.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "docs": "jsdoc ./lib ./README.md -d ./docs/"
   },
   "author": "Christopher Fetherston <chris@cfetherston.com> (https://github.com/fetherston)",
+  "contributors": [{
+    "name": "Gauthier Legrand",
+    "email": "gotleg@gmail.com"
+  }],
   "license": "MIT",
   "dependencies": {
     "dualshock-controller": "^0.6.9",

@@ -79,4 +79,15 @@ To fly with the keyboard follow the below instructions.
 ## Tests
 To run the test runner execute `npm test`.
 
+## Changelog
+
+### 1.0.3
+- Event battery change event
+- Fix issue with an error being thrown during connection on some Bluetooth devices
+
+### 1.0.2
+- Documentation
+- Unit tests
+- Flips interface
+
 ![Travis Status](https://travis-ci.org/fetherston/npm-parrot-minidrone.svg?branch=master)
