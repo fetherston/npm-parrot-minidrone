@@ -15,7 +15,7 @@ class Controller {
             // smooths the output from the analog sticks (moving averages) defaults to false
             analogStickSmoothing: false,
             // limits the input range of the analog sticks
-            sensitivity: 100,
+            sensitivity: 60,
             // No-op event handlers designed to be overridden via the options object
             onRightAnalogMove: () => {},
             onLeftAnalogMove: () => {},
