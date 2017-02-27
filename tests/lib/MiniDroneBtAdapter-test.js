@@ -48,6 +48,12 @@ describe('MiniDroneBtAdapter', () => {
         expect(adapter.steps).to.be.an('object');
         expect(adapter.batteryLevel).to.equal('Unknown');
         expect(adapter.noble).to.equal(require('noble'));
+        expect(adapter.options.droneFilter).to.equal('');
+
+        const options = {autoconnect: true, droneFilter: 'test'}
+        const filteredAdapter = new MiniDroneBtAdapter(options);
+        expect(filteredAdapter.options.autoconnect).to.equal(true);
+        expect(filteredAdapter.options.droneFilter).to.equal('test');
     });
 
     it('should correctly increment steps after writing over the network', () => {
