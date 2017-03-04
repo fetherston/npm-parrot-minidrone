@@ -81,6 +81,10 @@ To run the test runner execute `npm test`.
 
 ## Changelog
 
+### 1.1.0
+- Added support for Mambo, Blaze and New Z minidrones
+- Added support for setting max tilt, altitude, vertical speed, rotation speed and defining a drone type to connect to
+
 ### 1.0.3
 - Event battery change event
 - Fix issue with an error being thrown during connection on some Bluetooth devices
