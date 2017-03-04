@@ -31,6 +31,14 @@ describe('Drone', () => {
         expect(drone.animate).to.be.a('function');
     });
 
+    it('should contain drone settings methods', () => {
+        const drone = new Drone();
+        expect(drone.setMaxAltitude).to.be.a('function');
+        expect(drone.setMaxTilt).to.be.a('function');
+        expect(drone.setMaxVerticalSpeed).to.be.a('function');
+        expect(drone.setMaxRotationSpeed).to.be.a('function');
+    });
+
     it('should set options correctly', () => {
         const updateMsOption = 500;
         const drone = new Drone({
