@@ -12,5 +12,7 @@ before_install:
   - nvm use --delete-prefix $NODE_VERSION;
 install:
   - npm install
+  - npm install eslint-changes
 script:
   - npm test
+  - ./node_modules/.bin/eslint-changes
