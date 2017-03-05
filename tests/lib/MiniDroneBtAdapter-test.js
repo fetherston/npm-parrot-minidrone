@@ -50,7 +50,10 @@ describe('MiniDroneBtAdapter', () => {
         expect(adapter.noble).to.equal(require('noble'));
         expect(adapter.options.droneFilter).to.equal('');
 
-        const options = {autoconnect: true, droneFilter: 'test'}
+        const options = {
+            autoconnect: true,
+            droneFilter: 'test',
+        };
         const filteredAdapter = new MiniDroneBtAdapter(options);
         expect(filteredAdapter.options.autoconnect).to.equal(true);
         expect(filteredAdapter.options.droneFilter).to.equal('test');
@@ -130,7 +133,7 @@ describe('MiniDroneBtAdapter', () => {
 
     it('should write the correct max altitude buffer', () => {
         const adapter = new MiniDroneBtAdapter();
-        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x08, 0x00, 0x00, 2, 0x00 ]);
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x08, 0x00, 0x00, 2, 0x00]);
         adapter.characteristics = mockCharacteristics;
 
         adapter.writeMaxAltitude(2);
@@ -142,7 +145,7 @@ describe('MiniDroneBtAdapter', () => {
 
     it('should write the correct max tilt buffer', () => {
         const adapter = new MiniDroneBtAdapter();
-        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x08, 0x01, 0x00, 10, 0x00 ]);
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x08, 0x01, 0x00, 10, 0x00]);
         adapter.characteristics = mockCharacteristics;
 
         adapter.writeMaxTilt(10);
@@ -154,7 +157,7 @@ describe('MiniDroneBtAdapter', () => {
 
     it('should write the correct max vertical speed buffer', () => {
         const adapter = new MiniDroneBtAdapter();
-        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x01, 0x00, 0x00, 1, 0x00 ]);
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x01, 0x00, 0x00, 1, 0x00]);
         adapter.characteristics = mockCharacteristics;
 
         adapter.writeMaxVerticalSpeed(1);
@@ -166,7 +169,7 @@ describe('MiniDroneBtAdapter', () => {
 
     it('should write the correct max rotation speed buffer', () => {
         const adapter = new MiniDroneBtAdapter();
-        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x01, 0x01, 0x00, 100, 0x00 ]);
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x02, 0x01, 0x01, 0x00, 100, 0x00]);
         adapter.characteristics = mockCharacteristics;
 
         adapter.writeMaxRotationSpeed(100);
