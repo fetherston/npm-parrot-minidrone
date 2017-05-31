@@ -5,7 +5,8 @@
   "main": "drone.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "docs": "jsdoc ./lib ./README.md -d ./docs/"
+    "docs": "jsdoc ./lib ./README.md -d ./docs/",
+    "deploydocs": "git subtree push --prefix docs origin gh-pages"
   },
   "author": "Christopher Fetherston <chris@cfetherston.com> (https://github.com/fetherston)",
   "contributors": [
