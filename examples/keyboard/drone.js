@@ -56,6 +56,15 @@ process.stdin.on('keypress', (ch, key) => {
     case 'f':
         drone.trim();
         break;
+    case 'l':
+        drone.animateHeadlights();
+        break;
+    case 'k':
+        drone.animateHeadlights('blink');
+        break;
+    case 'o':
+        drone.animateHeadlights('oscillate');
+        break;
     case 'escape':
         drone.emergency();
         break;
