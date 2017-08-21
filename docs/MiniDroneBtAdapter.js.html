@@ -30,14 +30,14 @@
 const EventEmitter = require('events');
 
 // MiniDrone Command classes and class methods
-// https://github.com/Parrot-Developers/libARCommands/blob/master/Xml/MiniDrone_commands.xml
+// https://github.com/Parrot-Developers/arsdk-xml/blob/master/xml/minidrone.xml
+// https://github.com/Parrot-Developers/arsdk-xml/blob/ab28dab91845cd36c4d7002b55f70805deaff3c8/xml/common.xml
 const MD_CLASSES = {
     PILOTING: 0x00,
     SPEED_SETTINGS: 0x01,
     ANIMATION: 0x04,
     MEDIA_RECORD: 0x06,
     PILOTING_SETTINGS: 0x08,
-    NAVIGATION_DATA_STATE: 0x18,
 };
 const MD_METHODS = {
     TRIM: 0x00,
@@ -51,6 +51,7 @@ const MD_METHODS = {
     MAX_VERTICAL_SPEED: 0x00,
     MAX_ROTATION_SPEED: 0x01,
     DRONE_POSITION: 0x00,
+    LIGHT_STATE: 0x00,
 };
 const MD_DATA_TYPES = {
     ACK: 0x01,
@@ -75,6 +76,7 @@ const MANUFACTURER_SERIALS = ['4300cf1900090100', '4300cf1909090100', '4300cf190
 const DRONE_PREFIXES = ['RS_', 'Mars_', 'Travis_', 'Maclan_', 'Mambo_', 'Blaze_', 'NewZ_'];
 
 const MD_DEVICE_TYPE = 0x02;
+const MD_COMMON = 0x00;
 
 const FLIGHT_STATUSES = ['landed', 'taking off', 'hovering', 'flying',
                          'landing', 'emergency', 'rolling', 'initializing'];
@@ -166,10 +168,11 @@ class MiniDroneBtAdapter extends EventEmitter {
      * Creates a buffer with the common values needed to write to the drone
      * @param  {String} uuid The characteristic UUID
      * @param  {Array}  args The buffer arguments, usually the above command constants
+     * @param {String} deviceType Optional project class to write to
      * @return {buffer}      A freshly created Buffer stream
      */
-    createBuffer(uuid, args = []) {
-        const buffArray = [MD_DATA_TYPES.DATA, ++this.steps[uuid] &amp; 0xFF, MD_DEVICE_TYPE];
+    createBuffer(uuid, args = [], deviceType = MD_DEVICE_TYPE) {
+        const buffArray = [MD_DATA_TYPES.DATA, ++this.steps[uuid] &amp; 0xFF, deviceType];
         return new Buffer(buffArray.concat(args));
     }
 
@@ -279,7 +282,17 @@ class MiniDroneBtAdapter extends EventEmitter {
         }
         // this one is a little weird, don't understand the extra
         // argument after the flip class constant ¯\_(ツ)_/¯
-        const buffer = this.createBuffer(COMMAND_KEY, [MD_CLASSES.ANIMATION, MD_METHODS.FLIP, 0x00, animations[animation], 0x00, 0x00, 0x00]);
+        const buffer = this.createBuffer(
+            COMMAND_KEY, [
+                MD_CLASSES.ANIMATION,
+                MD_METHODS.FLIP,
+                0x00,
+                animations[animation],
+                0x00,
+                0x00,
+                0x00
+            ]
+        );
         this.write(COMMAND_KEY, buffer);
         Logger.info(`Animation command called with ${animation} argument`);
     }
@@ -322,7 +335,7 @@ class MiniDroneBtAdapter extends EventEmitter {
 
     /**
      * Convenience method for setting the drone's max rotation speed limitation
-     * @param  {integer} tilt The max rotation speed from (50°-360° for Airborne Cargo / 50° - 180° for Mambo)
+     * @param  {integer} rotationSpeed The max rotation speed from (50°-360° for Airborne Cargo / 50° - 180° for Mambo)
      * @return {undefined}
      */
     writeMaxRotationSpeed(rotationSpeed) {
@@ -330,6 +343,35 @@ class MiniDroneBtAdapter extends EventEmitter {
         this.write(COMMAND_KEY, buffer);
         this.emit('maxRotationSpeedChange', rotationSpeed);
         Logger.info(`Setting max rotation speed to ${rotationSpeed} °/s`);
+    }
+
+    /**
+     * Convenience method for sending the headlight animation command
+     * Can be fixed, blinking, or oscillated
+     * @param  {string} animation The desired headlight animation, can be 'flash', 'blink' or 'oscillate'
+     * @return {undefined}
+     */
+    writeHeadlightAnimation(animation = 'flash') {
+        const lightAnimation = {
+            flash: 0x00,
+            blink: 0x01,
+            oscillate: 0x02,
+        };
+
+        const buffer = this.createBuffer(
+            COMMAND_KEY, [
+                0x18, // class
+                MD_METHODS.LIGHT_STATE, // method
+                0x00, // ?
+                lightAnimation[animation], // argument
+                0x00,
+                0x00,
+                0x00,
+            ], MD_COMMON
+        );
+        this.write(COMMAND_KEY, buffer);
+
+        Logger.info(`Headlight animation command called with ${animation} argument.`);
     }
 
     /**
@@ -424,9 +466,10 @@ class MiniDroneBtAdapter extends EventEmitter {
      * @return {boolean} If the peripheral is a drone
      */
     validatePeripheral(peripheral) {
-        if (!peripheral) {
+        if (!peripheral || !peripheral.advertisement.localName) {
             return false;
         }
+
         const localName = peripheral.advertisement.localName;
         const manufacturer = peripheral.advertisement.manufacturerData;
         const matchesFilter = localName === this.options.droneFilter;
@@ -499,7 +542,7 @@ module.exports = MiniDroneBtAdapter;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue May 30 2017 20:43:51 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Mon Aug 21 2017 11:37:50 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
