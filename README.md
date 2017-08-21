@@ -74,12 +74,19 @@ To fly with the keyboard follow the below instructions.
 **d** | Yaw right
 **t** | Toggle takeoff & land
 **f** | Flattrim
+**l** | Flash the headlights (if equipped)
+**k** | Blink the headlights (if equipped)
+**o** | Oscillate the headlights (if equipped)
 **Escape** | Emergency land
 
 ## Tests
 To run the test runner execute `npm test`.
 
 ## Changelog
+
+### 1.2.0
+- Added support for animating the headlights on equipped drones
+- Fixed a bug with saturated Bluetooth environments
 
 ### 1.1.0
 - Added support for Mambo, Blaze and New Z minidrones
