@@ -186,4 +186,40 @@ describe('MiniDroneBtAdapter', () => {
         expect(isDrone).to.equal(true);
         expect(isNotDrone).to.equal(true);
     });
+
+    it('should write the correct flash headlight animation buffer', () => {
+        const adapter = new MiniDroneBtAdapter();
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+        adapter.characteristics = mockCharacteristics;
+
+        adapter.writeHeadlightAnimation();
+        const spy = adapter.characteristics[1].write;
+        expect(spy).to.have.been.calledWith(sinon.match((value) =>
+            bufferEqual(value, buff),
+        'did not match expected flash headlight buffer'), true);
+    });
+
+    it('should write the correct blink headlight animation buffer', () => {
+        const adapter = new MiniDroneBtAdapter();
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x00, 0x18, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00]);
+        adapter.characteristics = mockCharacteristics;
+
+        adapter.writeHeadlightAnimation('blink');
+        const spy = adapter.characteristics[1].write;
+        expect(spy).to.have.been.calledWith(sinon.match((value) =>
+            bufferEqual(value, buff),
+        'did not match expected flash headlight buffer'), true);
+    });
+
+    it('should write the correct oscillate headlight animation buffer', () => {
+        const adapter = new MiniDroneBtAdapter();
+        const buff = new Buffer([0x02, 1 & 0xFF, 0x00, 0x18, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00]);
+        adapter.characteristics = mockCharacteristics;
+
+        adapter.writeHeadlightAnimation('oscillate');
+        const spy = adapter.characteristics[1].write;
+        expect(spy).to.have.been.calledWith(sinon.match((value) =>
+            bufferEqual(value, buff),
+        'did not match expected flash headlight buffer'), true);
+    });
 });

@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>MiniDroneBtAdapter</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>MiniDroneBtAdapter<span class="signature">(options)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Network adapter between drone and Noble BTLE
 Abstracts away all the characteristics, buffers
@@ -46,7 +46,9 @@ and steps bullshit.</div>
     <h2>Constructor</h2>
     
 
+    
     <h4 class="name" id="MiniDroneBtAdapter"><span class="type-signature"></span>new MiniDroneBtAdapter<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    
 
     
 
@@ -202,7 +204,7 @@ and steps bullshit.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line61">line 61</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -228,6 +230,8 @@ and steps bullshit.</div>
 
 
 
+
+
     
     </div>
 
@@ -237,7 +241,9 @@ and steps bullshit.</div>
 
     
 
-     
+    
+
+    
 
     
 
@@ -251,7 +257,9 @@ and steps bullshit.</div>
 
     
 
-    <h4 class="name" id="createBuffer"><span class="type-signature"></span>createBuffer<span class="signature">(uuid, args)</span><span class="type-signature"> &rarr; {buffer}</span></h4>
+    
+    <h4 class="name" id="createBuffer"><span class="type-signature"></span>createBuffer<span class="signature">(uuid, args, deviceType)</span><span class="type-signature"> &rarr; {buffer}</span></h4>
+    
 
     
 
@@ -337,6 +345,29 @@ and steps bullshit.</div>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>deviceType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Optional project class to write to</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -374,7 +405,7 @@ and steps bullshit.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line143">line 143</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -422,12 +453,16 @@ and steps bullshit.</div>
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="getCharacteristic"><span class="type-signature"></span>getCharacteristic<span class="signature">(uuid)</span><span class="type-signature"> &rarr; {Characteristic}</span></h4>
+    
 
     
 
@@ -527,7 +562,7 @@ and steps bullshit.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line418">line 418</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line461">line 461</a>
     </li></ul></dd>
     
 
@@ -575,12 +610,16 @@ and steps bullshit.</div>
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="onBatteryStatusChange"><span class="type-signature"></span>onBatteryStatusChange<span class="signature">(data, isNotification)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -703,7 +742,7 @@ and steps bullshit.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line447">line 447</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line490">line 490</a>
     </li></ul></dd>
     
 
@@ -747,12 +786,16 @@ and steps bullshit.</div>
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="onDisconnect"><span class="type-signature"></span>onDisconnect<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -804,7 +847,7 @@ Set connected state to false and start scanning
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line334">line 334</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line376">line 376</a>
     </li></ul></dd>
     
 
@@ -848,12 +891,16 @@ Set connected state to false and start scanning
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="onFlightStatusChange"><span class="type-signature"></span>onFlightStatusChange<span class="signature">(data, isNotification)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -976,7 +1023,7 @@ Set connected state to false and start scanning
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line432">line 432</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line475">line 475</a>
     </li></ul></dd>
     
 
@@ -1020,12 +1067,16 @@ Set connected state to false and start scanning
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="onNobleStateChange"><span class="type-signature"></span>onNobleStateChange<span class="signature">(state)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1125,7 +1176,7 @@ Set connected state to false and start scanning
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line108">line 108</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -1169,12 +1220,16 @@ Set connected state to false and start scanning
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="onPeripheralDiscovery"><span class="type-signature"></span>onPeripheralDiscovery<span class="signature">(peripheral)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1275,7 +1330,7 @@ Validates it is a drone and attempts to connect.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line314">line 314</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line356">line 356</a>
     </li></ul></dd>
     
 
@@ -1319,12 +1374,16 @@ Validates it is a drone and attempts to connect.
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="setupPeripheral"><span class="type-signature"></span>setupPeripheral<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1375,7 +1434,7 @@ Validates it is a drone and attempts to connect.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line346">line 346</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line388">line 388</a>
     </li></ul></dd>
     
 
@@ -1419,12 +1478,16 @@ Validates it is a drone and attempts to connect.
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="updateRssi"><span class="type-signature"></span>updateRssi<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
     
 
@@ -1475,7 +1538,7 @@ Validates it is a drone and attempts to connect.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line382">line 382</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line424">line 424</a>
     </li></ul></dd>
     
 
@@ -1501,12 +1564,16 @@ Validates it is a drone and attempts to connect.
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="validatePeripheral"><span class="type-signature"></span>validatePeripheral<span class="signature">(peripheral)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
 
     
 
@@ -1606,7 +1673,7 @@ Validates it is a drone and attempts to connect.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line398">line 398</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line440">line 440</a>
     </li></ul></dd>
     
 
@@ -1654,12 +1721,16 @@ Validates it is a drone and attempts to connect.
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="write"><span class="type-signature"></span>write<span class="signature">(uuid, buffer)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1783,7 +1854,7 @@ Most convince methods in this class point to this method
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line123">line 123</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -1827,12 +1898,16 @@ Most convince methods in this class point to this method
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeAnimation"><span class="type-signature"></span>writeAnimation<span class="signature">(animation)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1932,7 +2007,7 @@ Most convince methods in this class point to this method
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line242">line 242</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line245">line 245</a>
     </li></ul></dd>
     
 
@@ -1976,12 +2051,16 @@ Most convince methods in this class point to this method
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeEmergency"><span class="type-signature"></span>writeEmergency<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2032,7 +2111,7 @@ Most convince methods in this class point to this method
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line221">line 221</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line224">line 224</a>
     </li></ul></dd>
     
 
@@ -2076,12 +2155,16 @@ Most convince methods in this class point to this method
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeFlightParams"><span class="type-signature"></span>writeFlightParams<span class="signature">(flightParams)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2182,7 +2265,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line155">line 155</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -2226,12 +2309,178 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
+    <h4 class="name" id="writeHeadlightAnimation"><span class="type-signature"></span>writeHeadlightAnimation<span class="signature">(animation)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Convenience method for sending the headlight animation command
+Can be fixed, blinking, or oscillated
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>animation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    flash
+                
+                </td>
+            
+
+            <td class="description last">The desired headlight animation, can be 'flash', 'blink' or 'oscillate'</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line326">line 326</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="writeLand"><span class="type-signature"></span>writeLand<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2282,7 +2531,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line211">line 211</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line214">line 214</a>
     </li></ul></dd>
     
 
@@ -2326,12 +2575,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeMaxAltitude"><span class="type-signature"></span>writeMaxAltitude<span class="signature">(altitude)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2431,7 +2684,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line264">line 264</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -2475,12 +2728,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
-    <h4 class="name" id="writeMaxRotationSpeed"><span class="type-signature"></span>writeMaxRotationSpeed<span class="signature">(tilt)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
+    <h4 class="name" id="writeMaxRotationSpeed"><span class="type-signature"></span>writeMaxRotationSpeed<span class="signature">(rotationSpeed)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2523,7 +2780,7 @@ TODO: This could be smarter and cache values and only update when changed
 
         <tr>
             
-                <td class="name"><code>tilt</code></td>
+                <td class="name"><code>rotationSpeed</code></td>
             
 
             <td class="type">
@@ -2580,7 +2837,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line300">line 300</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line313">line 313</a>
     </li></ul></dd>
     
 
@@ -2624,12 +2881,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeMaxTilt"><span class="type-signature"></span>writeMaxTilt<span class="signature">(tilt)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2729,7 +2990,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line276">line 276</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line289">line 289</a>
     </li></ul></dd>
     
 
@@ -2773,12 +3034,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeMaxVerticalSpeed"><span class="type-signature"></span>writeMaxVerticalSpeed<span class="signature">(verticalSpeed)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2878,7 +3143,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line288">line 288</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line301">line 301</a>
     </li></ul></dd>
     
 
@@ -2922,12 +3187,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeTakeoff"><span class="type-signature"></span>writeTakeoff<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2978,7 +3247,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line201">line 201</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line204">line 204</a>
     </li></ul></dd>
     
 
@@ -3022,12 +3291,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeTakePicture"><span class="type-signature"></span>writeTakePicture<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -3078,7 +3351,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line231">line 231</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line234">line 234</a>
     </li></ul></dd>
     
 
@@ -3122,12 +3395,16 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
             
 
     
 
+    
     <h4 class="name" id="writeTrim"><span class="type-signature"></span>writeTrim<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -3178,7 +3455,7 @@ TODO: This could be smarter and cache values and only update when changed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line191">line 191</a>
+        <a href="MiniDroneBtAdapter.js.html">MiniDroneBtAdapter.js</a>, <a href="MiniDroneBtAdapter.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -3222,6 +3499,8 @@ TODO: This could be smarter and cache values and only update when changed
 
 
 
+
+
         
     
 
@@ -3244,7 +3523,7 @@ TODO: This could be smarter and cache values and only update when changed
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue May 30 2017 20:43:51 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Mon Aug 21 2017 11:37:50 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
